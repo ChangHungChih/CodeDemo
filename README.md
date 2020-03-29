@@ -30,3 +30,5 @@ For interview and personal study
   依序排列於 下半部頂端的水平置中位置
 * 關閉App後 第二次開啟時
   顯示”歡迎回來”字樣的dialog或toast
+  
+![Sample_Screen](/sample_screen.jpg)
