@@ -1,10 +1,10 @@
 package tw.sean.codedemo.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tw.sean.codedemo.R;
+import tw.sean.codedemo.ShowDataActivity;
 import tw.sean.codedemo.model.WeatherRes;
 
 public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -39,16 +40,20 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         if (position % 2 == 0) {
-            int index = position / 2;
-            WeatherRes.RecordsBean.LocationBean.WeatherElementBean.TimeBean bean = weatherData.get(index);
+            final int index = position / 2;
+            final WeatherRes.RecordsBean.LocationBean.WeatherElementBean.TimeBean bean = weatherData.get(index);
             ((DataViewHolder) holder).tvStartTime.setText(bean.getStartTime());
             ((DataViewHolder) holder).tvEndTime.setText(bean.getEndTime());
-            String temperatureString = bean.getParameter().getParameterName() + bean.getParameter().getParameterUnit();
+            final String temperatureString = bean.getParameter().getParameterName() + bean.getParameter().getParameterUnit();
             ((DataViewHolder) holder).tvTemperature.setText(temperatureString);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(holder.itemView.getContext(), "todo", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(holder.itemView.getContext(), ShowDataActivity.class)
+                            .putExtra("start", bean.getStartTime())
+                            .putExtra("end", bean.getEndTime())
+                            .putExtra("temp", temperatureString);
+                    holder.itemView.getContext().startActivity(intent);
                 }
             });
         }
